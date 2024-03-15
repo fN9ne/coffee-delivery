@@ -1,5 +1,4 @@
-import { FC, useEffect } from "react";
-import { useActions } from "../hooks/useActions";
+import { FC } from "react";
 
 const Header: FC = () => {
 	return <div>Header</div>;
