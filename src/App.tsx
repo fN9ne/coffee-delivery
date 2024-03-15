@@ -6,7 +6,7 @@ const App: FC = () => {
 
 	console.log(coffees?.record);
 
-	return <></>;
+	return <>asd</>;
 };
 
 export default App;
