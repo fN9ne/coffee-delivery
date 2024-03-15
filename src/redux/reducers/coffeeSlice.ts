@@ -3,10 +3,12 @@ import { ICoffee } from "../../types";
 
 interface CoffeeState {
 	coffees: ICoffee[];
+	isLoaded: boolean;
 }
 
 const initialState: CoffeeState = {
 	coffees: [],
+	isLoaded: false,
 };
 
 const coffeeSlice = createSlice({
@@ -15,6 +17,9 @@ const coffeeSlice = createSlice({
 	reducers: {
 		setCoffees(state, action: PayloadAction<ICoffee[]>) {
 			state.coffees = action.payload;
+		},
+		updateCoffeesLoadingStatus(state, action: PayloadAction<boolean>) {
+			state.isLoaded = action.payload;
 		},
 	},
 });

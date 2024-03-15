@@ -21,5 +21,6 @@ export interface IJSONBinResponse {
 	};
 	record: {
 		coffees: ICoffee[];
+		categories: ICategory[];
 	};
 }

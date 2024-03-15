@@ -1,7 +1,11 @@
 import { FC } from "react";
 
 const Header: FC = () => {
-	return <div>Header</div>;
+	return (
+		<header className="header">
+			<div className="header__container container"></div>
+		</header>
+	);
 };
 
 export default Header;
