@@ -6,7 +6,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence as AP } from "framer-motion";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home/Home";
-import Checkout from "./pages/Checkout";
+import Checkout from "./pages/Checkout/Checkout";
 
 const App: FC = () => {
 	const { data } = coffeeApi.useFetchAllQuery("");

@@ -21,7 +21,7 @@ const cartSlice = createSlice({
 			state.cartItems = [...state.cartItems, action.payload];
 		},
 		removeCoffee(state, action: PayloadAction<number>) {
-			state.cartItems = state.cartItems.filter((_, index) => index === action.payload);
+			state.cartItems = state.cartItems.filter((cartItem) => cartItem.id !== action.payload);
 		},
 	},
 });
