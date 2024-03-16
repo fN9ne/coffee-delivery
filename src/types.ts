@@ -1,7 +1,7 @@
 export interface ICoffee {
 	id: number;
 	img: string;
-	categories: ICategory[];
+	categories: number[];
 	name: string;
 	description: string;
 	price: number;
@@ -22,5 +22,6 @@ export interface IJSONBinResponse {
 	record: {
 		coffees: ICoffee[];
 		categories: ICategory[];
+		locations: string[];
 	};
 }

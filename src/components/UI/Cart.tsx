@@ -7,12 +7,12 @@ const Cart: FC = () => {
 	const { cartItems } = useAppSelector((state) => state.cart);
 	const navigate = useNavigate();
 
-	const handleOpenCart = () => navigate("/cart");
+	const handleOpenCart = () => navigate("/checkout");
 
 	return (
-		<button className="cart" onClick={handleOpenCart}>
+		<button className="cart-button" onClick={handleOpenCart}>
 			<CartIcon />
-			<div className="cart__count">{cartItems.length}</div>
+			{cartItems.length > 0 && <div className="cart-button__count text text_s text_bold">{cartItems.length}</div>}
 		</button>
 	);
 };

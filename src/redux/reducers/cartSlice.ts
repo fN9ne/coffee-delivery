@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ICoffee } from "../../types";
+
+export type ICartCoffee = { id: number } & { amount: number };
 
 interface CartState {
-	cartItems: ICoffee[];
+	cartItems: ICartCoffee[];
 }
 
 const initialState: CartState = {
@@ -13,10 +14,10 @@ const cartSlice = createSlice({
 	name: "test",
 	initialState,
 	reducers: {
-		setCart(state, action: PayloadAction<ICoffee[]>) {
+		setCart(state, action: PayloadAction<ICartCoffee[]>) {
 			state.cartItems = action.payload;
 		},
-		addCoffee(state, action: PayloadAction<ICoffee>) {
+		addCoffee(state, action: PayloadAction<ICartCoffee>) {
 			state.cartItems = [...state.cartItems, action.payload];
 		},
 		removeCoffee(state, action: PayloadAction<number>) {

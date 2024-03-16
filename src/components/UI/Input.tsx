@@ -9,11 +9,11 @@ export enum InputType {
 }
 
 interface InputProps {
-	type: string;
+	type: InputType;
 	value: string;
-	placeholder: string;
-	isOptional: boolean;
-	onBlur: () => void;
+	placeholder?: string;
+	isOptional?: boolean;
+	onBlur?: () => void;
 	onChange: (value: string) => void;
 }
 
@@ -35,7 +35,7 @@ const Input: FC<InputProps> = ({ type, value, placeholder, isOptional, onBlur, o
 	};
 
 	return (
-		<div className="input">
+		<div className={`input${type === InputType.number ? " input__number" : ""}`}>
 			{type === "text" ? (
 				<>
 					<input type="text" onBlur={onBlur} onChange={handleChange} placeholder={placeholder} value={value} />
