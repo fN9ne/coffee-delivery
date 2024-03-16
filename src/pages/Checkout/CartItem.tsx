@@ -6,8 +6,11 @@ import Input, { InputType } from "../../components/UI/Input";
 import Button, { ButtonType } from "../../components/UI/Button";
 import { useActions } from "../../hooks/useActions";
 
+import TrashIcon from "../../img/icons/trash.svg?react";
+
 const CartItem: FC<ICartCoffee> = ({ id, amount }) => {
 	const { coffees } = useAppSelector((state) => state.coffee);
+	const { cartItems } = useAppSelector((state) => state.cart);
 
 	const { removeCoffee } = useActions();
 
@@ -17,7 +20,7 @@ const CartItem: FC<ICartCoffee> = ({ id, amount }) => {
 
 	const handleRemove = () => {
 		removeCoffee(id);
-		// localStorage.setItem("cart", JSON.stringify());
+		localStorage.setItem("cart", JSON.stringify([cartItems.filter((cartItem) => cartItem.id !== id)]));
 	};
 
 	return (
@@ -27,7 +30,7 @@ const CartItem: FC<ICartCoffee> = ({ id, amount }) => {
 				<div className="cart-item__name text text_m">{getCoffee?.name}</div>
 				<div className="cart-item__actions">
 					<Input onChange={localAmount.onChange} type={InputType.number} value={localAmount.value} />
-					<Button type={ButtonType.secondary} onClick={handleRemove}>
+					<Button icon={<TrashIcon />} type={ButtonType.secondary} onClick={handleRemove}>
 						Remover
 					</Button>
 				</div>
