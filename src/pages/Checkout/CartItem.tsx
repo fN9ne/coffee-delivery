@@ -11,6 +11,7 @@ import TrashIcon from "../../img/icons/trash.svg?react";
 const CartItem: FC<ICartCoffee> = ({ id, amount }) => {
 	const { coffees } = useAppSelector((state) => state.coffee);
 	const { cartItems } = useAppSelector((state) => state.cart);
+	const { currentLocation } = useAppSelector((state) => state.location);
 
 	const { removeCoffee } = useActions();
 
@@ -33,6 +34,9 @@ const CartItem: FC<ICartCoffee> = ({ id, amount }) => {
 					<Button icon={<TrashIcon />} type={ButtonType.secondary} onClick={handleRemove}>
 						Remover
 					</Button>
+				</div>
+				<div className="cart-item__price">
+					R$ {((getCoffee?.price! + currentLocation.allowance) * Number(localAmount.value)).toFixed(2).replace(".", ",")}
 				</div>
 			</div>
 		</div>

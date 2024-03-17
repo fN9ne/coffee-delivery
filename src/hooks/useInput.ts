@@ -2,9 +2,16 @@ import { useState } from "react";
 import { useValidation } from "./useValidation";
 import { useValidationReturns } from "./useValidation";
 
+export interface IMask {
+	format: string;
+	onlyDigits?: boolean;
+	onlyChars?: boolean;
+}
+
 export interface IValidation {
 	minLength?: number;
 	isEmail?: boolean;
+	mask?: IMask;
 }
 
 interface useInputReturns {
@@ -25,7 +32,39 @@ export const useInput: useInputArguments = (initialValue, validations) => {
 
 	const valid = useValidation(value, validations);
 
-	const onChange = (newValue: string) => setValue(newValue);
+	const onChange = (newValue: string) => {
+		if (validations.mask) {
+			const { format, onlyDigits, onlyChars } = validations.mask;
+			let maskedValue = newValue;
+
+			if (onlyDigits) {
+				maskedValue = maskedValue.replace(/\D/g, "");
+			}
+			if (onlyChars) {
+				maskedValue = maskedValue.replace(/[^A-Za-z]/g, "");
+			}
+
+			let formattedValue = "";
+			let index = 0;
+
+			for (let i = 0; i < format.length; i++) {
+				if (format[i] === "#" && index < maskedValue.length) {
+					formattedValue += maskedValue[index];
+					index++;
+				} else if (format[i] === "#") {
+					formattedValue += "_";
+				} else {
+					formattedValue += format[i];
+				}
+			}
+
+			formattedValue = formattedValue.replace(/[^#]/g, "_");
+
+			setValue(formattedValue);
+		} else {
+			setValue(newValue);
+		}
+	};
 	const onBlur = () => setIsDirty(true);
 	const reset = () => {
 		setValue("");
