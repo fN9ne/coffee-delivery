@@ -8,16 +8,24 @@ export enum InputType {
 	number = "number",
 }
 
+export enum InputWides {
+	fit = "fit",
+	full = "full",
+	third = "third",
+	small = "small",
+}
+
 interface InputProps {
 	type: InputType;
 	value: string;
 	placeholder?: string;
+	wide?: InputWides;
 	isOptional?: boolean;
 	onBlur?: () => void;
 	onChange: (value: string) => void;
 }
 
-const Input: FC<InputProps> = ({ type, value, placeholder, isOptional, onBlur, onChange }) => {
+const Input: FC<InputProps> = ({ type, value, wide, placeholder, isOptional, onBlur, onChange }) => {
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value);
 
 	const handleDecrease = () => {
@@ -35,7 +43,21 @@ const Input: FC<InputProps> = ({ type, value, placeholder, isOptional, onBlur, o
 	};
 
 	return (
-		<div className={`input${type === InputType.number ? " input__number" : ""}`}>
+		<div
+			className={`input${type === InputType.number ? " input__number" : " input__text"}${
+				wide
+					? wide === InputWides.fit
+						? " input_fit"
+						: wide === InputWides.full
+						? " input_full"
+						: wide === InputWides.third
+						? " input_third"
+						: wide === InputWides.small
+						? " input_small"
+						: ""
+					: ""
+			}`}
+		>
 			{type === "text" ? (
 				<>
 					<input type="text" onBlur={onBlur} onChange={handleChange} placeholder={placeholder} value={value} />
