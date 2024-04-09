@@ -28,9 +28,11 @@ const MainScreen: FC = () => {
 						<div className="text text_l">Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora</div>
 					</div>
 					<div className="welcome__advantages">
-						{advantages.map((advantage, index) => (
-							<Advantage {...advantage} key={index} />
-						))}
+						<div className="welcome__advantages-wrapper">
+							{advantages.map((advantage, index) => (
+								<Advantage {...advantage} key={index} />
+							))}
+						</div>
 					</div>
 				</div>
 				<img src={Coffee} alt="Coffee illustration" className="welcome__illustration" />

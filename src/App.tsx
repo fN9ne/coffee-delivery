@@ -7,6 +7,7 @@ import { AnimatePresence as AP } from "framer-motion";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home/Home";
 import Checkout from "./pages/Checkout/Checkout";
+import Success from "./pages/Success/Success";
 
 const App: FC = () => {
 	const { data } = coffeeApi.useFetchAllQuery("");
@@ -64,6 +65,7 @@ const App: FC = () => {
 				<Route path="/" element={<MainLayout />}>
 					<Route index element={<Home />} />
 					<Route path="/checkout" element={<Checkout />} />
+					<Route path="/success" element={<Success />} />
 				</Route>
 			</Routes>
 		</AP>

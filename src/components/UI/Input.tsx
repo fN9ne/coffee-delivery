@@ -21,11 +21,13 @@ interface InputProps {
 	placeholder?: string;
 	wide?: InputWides;
 	isOptional?: boolean;
+	isError?: boolean;
+	errorMsg?: string;
 	onBlur?: () => void;
 	onChange: (value: string) => void;
 }
 
-const Input: FC<InputProps> = ({ type, value, wide, placeholder, isOptional, onBlur, onChange }) => {
+const Input: FC<InputProps> = ({ type, value, wide, isError, errorMsg, placeholder, isOptional, onBlur, onChange }) => {
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => onChange(event.target.value);
 
 	const handleDecrease = () => {
@@ -56,11 +58,12 @@ const Input: FC<InputProps> = ({ type, value, wide, placeholder, isOptional, onB
 						? " input_small"
 						: ""
 					: ""
-			}`}
+			}${isError ? " input_invalid" : ""}`}
 		>
 			{type === "text" ? (
 				<>
 					<input type="text" onBlur={onBlur} onChange={handleChange} placeholder={placeholder} value={value} />
+					{isError && <div className="input__error">{errorMsg}</div>}
 					{isOptional && <div className="input__optional-label">Optional</div>}
 				</>
 			) : (

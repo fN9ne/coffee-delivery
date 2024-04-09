@@ -5,6 +5,7 @@ export interface useValidationReturns {
 	isInputValid: boolean;
 	minLengthError: boolean | null;
 	isEmailCorrect: boolean | null;
+	isRegexpCorrect: boolean | null;
 }
 
 interface useValidationArguments {
@@ -15,6 +16,7 @@ export const useValidation: useValidationArguments = (value, validations) => {
 	const [isInputValid, setIsInputValid] = useState<boolean>(false);
 	const [minLengthError, setMinLengthError] = useState<boolean>(false);
 	const [isEmailCorrect, setIsEmailCorrect] = useState<boolean>(true);
+	const [isRegexpCorrect, setIsRegexpCorrect] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (validations.minLength) {
@@ -27,15 +29,19 @@ export const useValidation: useValidationArguments = (value, validations) => {
 				)
 			);
 		}
+		if (validations.regexp) {
+			setIsRegexpCorrect(validations.regexp.test(value));
+		}
 	}, [value]);
 
 	useEffect(() => {
-		setIsInputValid(!minLengthError && isEmailCorrect);
-	}, [minLengthError, isEmailCorrect]);
+		setIsInputValid(!minLengthError && isEmailCorrect && isRegexpCorrect);
+	}, [minLengthError, isEmailCorrect, isRegexpCorrect]);
 
 	return {
 		isInputValid,
 		minLengthError: validations.minLength ? minLengthError : null,
 		isEmailCorrect: validations.isEmail ? isEmailCorrect : null,
+		isRegexpCorrect: validations.regexp ? isRegexpCorrect : null,
 	};
 };

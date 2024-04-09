@@ -13,7 +13,7 @@ const CartItem: FC<ICartCoffee> = ({ id, amount }) => {
 	const { cartItems } = useAppSelector((state) => state.cart);
 	const { currentLocation } = useAppSelector((state) => state.location);
 
-	const { removeCoffee } = useActions();
+	const { removeCoffee, setCart } = useActions();
 
 	const getCoffee = coffees.find((coffee) => coffee.id === id);
 
@@ -30,14 +30,33 @@ const CartItem: FC<ICartCoffee> = ({ id, amount }) => {
 			<div className="cart-item__content">
 				<div className="cart-item__name text text_m">{getCoffee?.name}</div>
 				<div className="cart-item__actions">
-					<Input onChange={localAmount.onChange} type={InputType.number} value={localAmount.value} />
+					<Input
+						onChange={(value: string) => {
+							const newItems = cartItems.map((cartItem) => {
+								if (cartItem.id === id) {
+									return {
+										id,
+										amount: Number(value),
+									};
+								}
+								return cartItem;
+							});
+
+							setCart(newItems);
+
+							localAmount.onChange(value);
+							localStorage.setItem("cart", JSON.stringify(newItems));
+						}}
+						type={InputType.number}
+						value={localAmount.value}
+					/>
 					<Button icon={<TrashIcon />} type={ButtonType.secondary} onClick={handleRemove}>
 						Remover
 					</Button>
 				</div>
-				<div className="cart-item__price">
-					R$ {((getCoffee?.price! + currentLocation.allowance) * Number(localAmount.value)).toFixed(2).replace(".", ",")}
-				</div>
+			</div>
+			<div className="cart-item__price">
+				R$ {((getCoffee?.price! + currentLocation.allowance) * Number(localAmount.value)).toFixed(2).replace(".", ",")}
 			</div>
 		</div>
 	);
